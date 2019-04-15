@@ -291,7 +291,7 @@ open class PagingViewController<T: PagingItem>:
   private var indexedDataSource: IndexedPagingDataSource<T>?
   private var didLayoutSubviews: Bool = false
   private let PagingCellReuseIdentifier = "PagingCellReuseIdentifier"
-  private var pagingView: PagingView {
+  public var pagingView: PagingView {
     return view as! PagingView
   }
   

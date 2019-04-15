@@ -38,6 +38,29 @@ open class PagingView: UIView {
     setupConstraints()
   }
   
+    open func hideCollectionView() {
+        let metrics = [
+            "height": 0]
+        
+        let views = [
+            "collectionView": collectionView,
+            "pageView": pageView]
+        
+        #if swift(>=4.2)
+        let formatOptions = NSLayoutConstraint.FormatOptions()
+        #else
+        let formatOptions = NSLayoutFormatOptions()
+        #endif
+        
+        let verticalContraints = NSLayoutConstraint.constraints(
+            withVisualFormat: "V:|[collectionView(==height)][pageView]|",
+            options: formatOptions,
+            metrics: metrics,
+            views: views)
+        
+        addConstraints(verticalContraints)
+    }
+    
   /// Sets up all the layout constraints. Override this if you need to
   /// make changes to how the views are layed out.
   open func setupConstraints() {
@@ -74,6 +97,10 @@ open class PagingView: UIView {
       options: formatOptions,
       metrics: metrics,
       views: views)
+    
+    for constraint in verticalContraints {
+        constraint.priority = .defaultLow
+    }
     
     addConstraints(horizontalCollectionViewContraints)
     addConstraints(horizontalPagingContentViewContraints)
